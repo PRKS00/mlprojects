@@ -16,7 +16,7 @@ from src.logger import logging
 
 @dataclass
 class DataTransformationConfig:
-  preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
+  preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")  # preprocessor_obj_file_path → where your preprocessor  object will be saved.
 
 
 class DataTransformation:
@@ -35,7 +35,7 @@ class DataTransformation:
       ]
       num_pipeline=Pipeline(
         steps=[
-          ("imputer",SimpleImputer(strategy='median')),
+          ("imputer",SimpleImputer(strategy='median')), # imputer is used to fill missing numeric values with the median
           ("scaler",StandardScaler())
         ]  
       )
@@ -43,7 +43,7 @@ class DataTransformation:
       logging.info(f"Numerical Columns:{numerical_columns}")
       cat_pipeline=Pipeline(
         steps=[
-          ("imputer",SimpleImputer(strategy="most_frequent")),
+          ("imputer",SimpleImputer(strategy="most_frequent")), #Fills missing categorical values with the most frequent one
           ("one_hot_encoder",OneHotEncoder()),
           ("scaler",StandardScaler(with_mean=False))
         ]
@@ -64,7 +64,7 @@ class DataTransformation:
 
 
 
-  def initiate_data_transformation(self,train_path,test_path):
+  def initiate_data_transformation(self,train_path,test_path): #Actually applies the preprocessor to the training and testing datasets.
     try:
       train_df=pd.read_csv(train_path)
       test_df=pd.read_csv(test_path)
@@ -74,6 +74,7 @@ class DataTransformation:
       logging.info("obtaining preprocessing object")
 
       preprocessing_obj=self.get_data_transformer_object()
+      
       target_column_name="math_score"
       numerical_columns=["writing_score","reading_score"]
 

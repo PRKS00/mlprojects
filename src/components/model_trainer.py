@@ -28,10 +28,10 @@ class ModelTrainer:
         try:
             logging.info("Splitting training and test input data")
             X_train, y_train, X_test, y_test = (
-                train_array[:, :-1],
-                train_array[:, -1],
-                test_array[:, :-1],
-                test_array[:, -1],
+                train_array[:, :-1],#all columns except the last (features)
+                train_array[:, -1],#last column (target)
+                test_array[:, :-1],#all columns except the last (features)
+                test_array[:, -1],#last column (target)
             )
 
             # ✅ Models dictionary (consistent naming)
